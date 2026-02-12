@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Income Expense App</title>
+</head>
+<body>
+
+  <h2>บันทึกรายรับรายจ่าย</h2>
+
+  <input type="date" id="date">
+  <input type="text" id="detail" placeholder="รายละเอียด">
+  
+  <select id="type">
+    <option value="income">รายรับ</option>
+    <option value="expense">รายจ่าย</option>
+  </select>
+
+  <input type="number" id="amount" placeholder="จำนวนเงิน">
+  <button onclick="saveData()">บันทึก</button>
+
+  <hr>
+
+  <h3>รายการทั้งหมด</h3>
+  <ul id="list"></ul>
+  <h3>สรุปยอด</h3>
+  <p>รายรับรวม: <span id="totalIncome">0</span> บาท</p>
+  <p>รายจ่ายรวม: <span id="totalExpense">0</span> บาท</p>
+  <p>คงเหลือ: <span id="balance">0</span> บาท</p>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
