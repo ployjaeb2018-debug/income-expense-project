@@ -11,21 +11,23 @@
 
 <h2>บันทึกรายรับรายจ่าย</h2>
 
-<form>
-<input type="date">
-<input type="text" placeholder="รายละเอียด">
-<select>
-<option>รายรับ</option>
-<option>รายจ่าย</option>
+<form onsubmit="addTransaction(event)">
+<input type="date" id="date" required>
+<input type="text" id="detail" placeholder="รายละเอียด" required>
+
+<select id="type">
+<option value="income">รายรับ</option>
+<option value="expense">รายจ่าย</option>
 </select>
-<input type="number" placeholder="จำนวนเงิน">
+
+<input type="number" id="amount" placeholder="จำนวนเงิน" required>
 <button type="submit">บันทึก</button>
 </form>
 
 <div class="summary">
-<p>รายรับรวม: 0 บาท</p>
-<p>รายจ่ายรวม: 0 บาท</p>
-<p>คงเหลือ: 0 บาท</p>
+<p>รายรับรวม: <span id="totalIncome">0</span> บาท</p>
+<p>รายจ่ายรวม: <span id="totalExpense">0</span> บาท</p>
+<p>คงเหลือ: <span id="balance">0</span> บาท</p>
 </div>
 
 <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
@@ -33,16 +35,52 @@
 </div>
 
 <script>
+// 🔐 กันเข้าถ้ายังไม่ล็อกอิน
 const isLoggedIn = localStorage.getItem("loggedIn");
-
 if(isLoggedIn !== "true"){
 window.location.href = "login.html";
+}
+
+// 📦 โหลดข้อมูลเก่า
+let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
+function addTransaction(event){
+event.preventDefault();
+
+const type = document.getElementById("type").value;
+const amount = parseFloat(document.getElementById("amount").value);
+
+transactions.push({ type, amount });
+
+localStorage.setItem("transactions", JSON.stringify(transactions));
+
+calculate();
+event.target.reset();
+}
+
+function calculate(){
+let income = 0;
+let expense = 0;
+
+transactions.forEach(item => {
+if(item.type === "income"){
+income += item.amount;
+}else{
+expense += item.amount;
+}
+});
+
+document.getElementById("totalIncome").innerText = income;
+document.getElementById("totalExpense").innerText = expense;
+document.getElementById("balance").innerText = income - expense;
 }
 
 function logout(){
 localStorage.removeItem("loggedIn");
 window.location.href = "login.html";
 }
+
+calculate();
 </script>
 
 </body>
