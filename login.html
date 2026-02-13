@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>เข้าสู่ระบบ</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>เข้าสู่ระบบ</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h2>เข้าสู่ระบบ</h2>
+<h2>เข้าสู่ระบบ</h2>
 
-    <form onsubmit="loginUser(event)">
-        <input type="text" id="loginUser" placeholder="ชื่อผู้ใช้" required>
-        <input type="password" id="loginPass" placeholder="รหัสผ่าน" required>
+<form onsubmit="loginUser(event)">
+<input type="text" id="loginUser" placeholder="ชื่อผู้ใช้" required>
+<input type="password" id="loginPass" placeholder="รหัสผ่าน" required>
+<button type="submit">เข้าสู่ระบบ</button>
+</form>
 
-        <button type="submit">เข้าสู่ระบบ</button>
-    </form>
-
-    <div class="link-text">
-        ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a>
-    </div>
+<div class="link-text">
+ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a>
+</div>
 </div>
 
 <script>
 function loginUser(event){
-    event.preventDefault();
+event.preventDefault();
 
-    const user = document.getElementById("loginUser").value;
-    const pass = document.getElementById("loginPass").value;
+const user = document.getElementById("loginUser").value;
+const pass = document.getElementById("loginPass").value;
 
-    const savedUser = localStorage.getItem("user");
-    const savedPass = localStorage.getItem("pass");
+const savedUser = localStorage.getItem("user");
+const savedPass = localStorage.getItem("pass");
 
-    if(user === savedUser && pass === savedPass){
-        alert("เข้าสู่ระบบสำเร็จ!");
-        window.location.href = "index.html";
-    } else {
-        alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
-    }
+if(user === savedUser && pass === savedPass){
+localStorage.setItem("loggedIn", "true");
+alert("เข้าสู่ระบบสำเร็จ!");
+window.location.href = "index.html";
+} else {
+alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+}
 }
 </script>
 
