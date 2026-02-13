@@ -1,37 +1,49 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>Income Expense App</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Income Expense App</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h2>บันทึกรายรับรายจ่าย</h2>
+<h2>บันทึกรายรับรายจ่าย</h2>
 
-        <form>
-            <input type="date">
-            <input type="text" placeholder="รายละเอียด">
-            
-            <select>
-                <option value="income">รายรับ</option>
-                <option value="expense">รายจ่าย</option>
-            </select>
+<form>
+<input type="date">
+<input type="text" placeholder="รายละเอียด">
+<select>
+<option>รายรับ</option>
+<option>รายจ่าย</option>
+</select>
+<input type="number" placeholder="จำนวนเงิน">
+<button type="submit">บันทึก</button>
+</form>
 
-            <input type="number" placeholder="จำนวนเงิน">
+<div class="summary">
+<p>รายรับรวม: 0 บาท</p>
+<p>รายจ่ายรวม: 0 บาท</p>
+<p>คงเหลือ: 0 บาท</p>
+</div>
 
-            <button type="submit">บันทึก</button>
-        </form>
+<button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
 
-        <div class="summary">
-            <p>รายรับรวม: 0 บาท</p>
-            <p>รายจ่ายรวม: 0 บาท</p>
-            <p>คงเหลือ: 0 บาท</p>
-        </div>
+</div>
 
-    </div>
+<script>
+const isLoggedIn = localStorage.getItem("loggedIn");
+
+if(isLoggedIn !== "true"){
+window.location.href = "login.html";
+}
+
+function logout(){
+localStorage.removeItem("loggedIn");
+window.location.href = "login.html";
+}
+</script>
 
 </body>
 </html>
