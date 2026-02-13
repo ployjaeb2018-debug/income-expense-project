@@ -1,36 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>Income Expense App</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Income Expense App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h2>บันทึกรายรับรายจ่าย</h2>
+    <div class="container">
 
-  <input type="date" id="date">
-  <input type="text" id="detail" placeholder="รายละเอียด">
-  
-  <select id="type">
-    <option value="income">รายรับ</option>
-    <option value="expense">รายจ่าย</option>
-  </select>
+        <h2>บันทึกรายรับรายจ่าย</h2>
 
-  <input type="number" id="amount" placeholder="จำนวนเงิน">
-  <button onclick="saveData()">บันทึก</button>
+        <form>
+            <input type="date">
+            <input type="text" placeholder="รายละเอียด">
+            
+            <select>
+                <option value="income">รายรับ</option>
+                <option value="expense">รายจ่าย</option>
+            </select>
 
-  <hr>
+            <input type="number" placeholder="จำนวนเงิน">
 
-  <h3>รายการทั้งหมด</h3>
-  <ul id="list"></ul>
-  <h3>สรุปยอด</h3>
-  <p>รายรับรวม: <span id="totalIncome">0</span> บาท</p>
-  <p>รายจ่ายรวม: <span id="totalExpense">0</span> บาท</p>
-  <p>คงเหลือ: <span id="balance">0</span> บาท</p>
+            <button type="submit">บันทึก</button>
+        </form>
 
+        <div class="summary">
+            <p>รายรับรวม: 0 บาท</p>
+            <p>รายจ่ายรวม: 0 บาท</p>
+            <p>คงเหลือ: 0 บาท</p>
+        </div>
 
-  <script src="script.js"></script>
+    </div>
+
 </body>
 </html>
-
