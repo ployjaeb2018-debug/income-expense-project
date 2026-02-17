@@ -30,32 +30,79 @@
 <p>คงเหลือ: <span id="balance">0</span> บาท</p>
 </div>
 
+<h3>รายการทั้งหมด</h3>
+
+<table border="1" width="100%" id="transactionTable">
+<thead>
+<tr>
+<th>วันที่</th>
+<th>รายละเอียด</th>
+<th>ประเภท</th>
+<th>จำนวนเงิน</th>
+<th>ลบ</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
 <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
 
 </div>
 
 <script>
-// 🔐 กันเข้าถ้ายังไม่ล็อกอิน
+// 🔐 ตรวจสอบล็อกอิน
 const isLoggedIn = localStorage.getItem("loggedIn");
+const currentUser = localStorage.getItem("user");
+
 if(isLoggedIn !== "true"){
 window.location.href = "login.html";
 }
 
-// 📦 โหลดข้อมูลเก่า
-let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+// 📦 โหลดข้อมูลของ user คนนี้เท่านั้น
+let transactions = JSON.parse(localStorage.getItem(currentUser + "_transactions")) || [];
 
 function addTransaction(event){
 event.preventDefault();
 
+const date = document.getElementById("date").value;
+const detail = document.getElementById("detail").value;
 const type = document.getElementById("type").value;
 const amount = parseFloat(document.getElementById("amount").value);
 
-transactions.push({ type, amount });
+const newItem = { date, detail, type, amount };
 
-localStorage.setItem("transactions", JSON.stringify(transactions));
+transactions.push(newItem);
 
+localStorage.setItem(currentUser + "_transactions", JSON.stringify(transactions));
+
+renderTable();
 calculate();
 event.target.reset();
+}
+
+function renderTable(){
+const tbody = document.querySelector("#transactionTable tbody");
+tbody.innerHTML = "";
+
+transactions.forEach((item, index) => {
+const row = `
+<tr>
+<td>${item.date}</td>
+<td>${item.detail}</td>
+<td>${item.type === "income" ? "รายรับ" : "รายจ่าย"}</td>
+<td>${item.amount}</td>
+<td><button onclick="deleteItem(${index})">ลบ</button></td>
+</tr>
+`;
+tbody.innerHTML += row;
+});
+}
+
+function deleteItem(index){
+transactions.splice(index, 1);
+localStorage.setItem(currentUser + "_transactions", JSON.stringify(transactions));
+renderTable();
+calculate();
 }
 
 function calculate(){
@@ -80,6 +127,7 @@ localStorage.removeItem("loggedIn");
 window.location.href = "login.html";
 }
 
+renderTable();
 calculate();
 </script>
 
