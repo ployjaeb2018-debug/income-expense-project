@@ -1,35 +1,14 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="UTF-8">
-<title>Income Expense App</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div class="container">
-
-<h2>ยินดีต้อนรับ</h2>
-
-<p>เข้าสู่ระบบสำเร็จ 🎉</p>
-
-<button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
-
-</div>
-
 <script>
-// 🔐 กันเข้าถ้ายังไม่ล็อกอิน
 const isLoggedIn = localStorage.getItem("loggedIn");
+const currentUser = localStorage.getItem("currentUser");
 
-if(isLoggedIn !== "true"){
+if(isLoggedIn !== "true" || !currentUser){
 window.location.href = "login.html";
 }
 
 function logout(){
 localStorage.removeItem("loggedIn");
+localStorage.removeItem("currentUser");
 window.location.href = "login.html";
 }
 </script>
-
-</body>
-</html>
