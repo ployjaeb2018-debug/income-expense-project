@@ -9,126 +9,26 @@
 
 <div class="container">
 
-<h2>บันทึกรายรับรายจ่าย</h2>
+<h2>ยินดีต้อนรับ</h2>
 
-<form onsubmit="addTransaction(event)">
-<input type="date" id="date" required>
-<input type="text" id="detail" placeholder="รายละเอียด" required>
-
-<select id="type">
-<option value="income">รายรับ</option>
-<option value="expense">รายจ่าย</option>
-</select>
-
-<input type="number" id="amount" placeholder="จำนวนเงิน" required>
-<button type="submit">บันทึก</button>
-</form>
-
-<div class="summary">
-<p>รายรับรวม: <span id="totalIncome">0</span> บาท</p>
-<p>รายจ่ายรวม: <span id="totalExpense">0</span> บาท</p>
-<p>คงเหลือ: <span id="balance">0</span> บาท</p>
-</div>
-
-<h3>รายการทั้งหมด</h3>
-
-<table border="1" width="100%" id="transactionTable">
-<thead>
-<tr>
-<th>วันที่</th>
-<th>รายละเอียด</th>
-<th>ประเภท</th>
-<th>จำนวนเงิน</th>
-<th>ลบ</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+<p>เข้าสู่ระบบสำเร็จ 🎉</p>
 
 <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
 
 </div>
 
 <script>
-// 🔐 ตรวจสอบล็อกอิน
+// 🔐 กันเข้าถ้ายังไม่ล็อกอิน
 const isLoggedIn = localStorage.getItem("loggedIn");
-const currentUser = localStorage.getItem("user");
 
 if(isLoggedIn !== "true"){
 window.location.href = "login.html";
-}
-
-// 📦 โหลดข้อมูลของ user คนนี้เท่านั้น
-let transactions = JSON.parse(localStorage.getItem(currentUser + "_transactions")) || [];
-
-function addTransaction(event){
-event.preventDefault();
-
-const date = document.getElementById("date").value;
-const detail = document.getElementById("detail").value;
-const type = document.getElementById("type").value;
-const amount = parseFloat(document.getElementById("amount").value);
-
-const newItem = { date, detail, type, amount };
-
-transactions.push(newItem);
-
-localStorage.setItem(currentUser + "_transactions", JSON.stringify(transactions));
-
-renderTable();
-calculate();
-event.target.reset();
-}
-
-function renderTable(){
-const tbody = document.querySelector("#transactionTable tbody");
-tbody.innerHTML = "";
-
-transactions.forEach((item, index) => {
-const row = `
-<tr>
-<td>${item.date}</td>
-<td>${item.detail}</td>
-<td>${item.type === "income" ? "รายรับ" : "รายจ่าย"}</td>
-<td>${item.amount}</td>
-<td><button onclick="deleteItem(${index})">ลบ</button></td>
-</tr>
-`;
-tbody.innerHTML += row;
-});
-}
-
-function deleteItem(index){
-transactions.splice(index, 1);
-localStorage.setItem(currentUser + "_transactions", JSON.stringify(transactions));
-renderTable();
-calculate();
-}
-
-function calculate(){
-let income = 0;
-let expense = 0;
-
-transactions.forEach(item => {
-if(item.type === "income"){
-income += item.amount;
-}else{
-expense += item.amount;
-}
-});
-
-document.getElementById("totalIncome").innerText = income;
-document.getElementById("totalExpense").innerText = expense;
-document.getElementById("balance").innerText = income - expense;
 }
 
 function logout(){
 localStorage.removeItem("loggedIn");
 window.location.href = "login.html";
 }
-
-renderTable();
-calculate();
 </script>
 
 </body>
